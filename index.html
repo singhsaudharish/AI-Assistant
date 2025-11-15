@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Assistant</title>
+
+    <!-- External SDKs -->
+    <script src="/_sdk/data_sdk.js"></script>
+    <script src="/_sdk/element_sdk.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+</head>
+
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="assistant-name" id="assistantName">🔵 AI Assistant</h1>
+            <p class="welcome-message" id="welcomeMessage">Hello! I'm your personal AI assistant. How can I help you today?</p>
+        </header>
+
+        <main class="chat-container">
+            <div class="chat-messages" id="chatMessages"></div>
+
+            <div class="typing-indicator" id="typingIndicator">
+                <div class="message-avatar assistant">🤖</div>
+                <div class="typing-dots">
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                </div>
+            </div>
+
+            <div class="quick-actions">
+                <div class="quick-action" onclick="sendQuickQuery(`What's the weather like?`)">Weather</div>
+                <div class="quick-action" onclick="sendQuickQuery('Set a reminder')">Reminder</div>
+                <div class="quick-action" onclick="sendQuickQuery('Tell me a joke')">Joke</div>
+                <div class="quick-action" onclick="sendQuickQuery('What’s the time?')">Time</div>
+                <div class="quick-action" onclick="sendQuickQuery('Calculate 15% tip on $50')">Calculator</div>
+                <div class="quick-action" onclick="toggleContinuousListening()">🎤 Continuous</div>
+            </div>
+
+            <div class="input-container">
+                <input type="text" class="input-field" id="userInput" placeholder="Ask me anything..." maxlength="500">
+                <button class="voice-button" id="voiceButton" onclick="toggleVoiceInput()">🎤 <span id="voiceButtonText">Voice</span></button>
+                <button class="send-button" id="sendButton" onclick="sendMessage()">Send</button>
+            </div>
+        </main>
+
+        <div class="history-panel">
+            <h3 class="history-title">
+                Recent Conversations
+                <button class="view-all-btn" onclick="openDataViewer()">📊 View All Data</button>
+            </h3>
+            <div id="historyContainer"></div>
+        </div>
+    </div>
+
+    <!-- Data Viewer Modal -->
+    <div class="modal-overlay" id="dataViewerModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">📊 Conversation Data Viewer</h2>
+                <button class="close-btn" onclick="closeDataViewer()">×</button>
+            </div>
+
+            <div class="data-viewer-controls">
+                <input type="text" class="search-box" id="searchBox" placeholder="Search conversations..." onkeyup="filterConversations()">
+                <select class="filter-select" id="categoryFilter" onchange="filterConversations()">
+                    <option value="">All Categories</option>
+                    <option value="time">Time</option>
+                    <option value="weather">Weather</option>
+                    <option value="calculation">Calculation</option>
+                    <option value="entertainment">Entertainment</option>
+                    <option value="reminder">Reminder</option>
+                    <option value="general">General</option>
+                </select>
+                <button class="export-btn" onclick="exportData()">📥 Export CSV</button>
+
+                <div class="data-stats">
+                    <span id="totalCount">Total: 0</span>
+                    <span id="filteredCount">Showing: 0</span>
+                </div>
+            </div>
+
+            <div class="modal-body">
+                <div class="conversation-list" id="conversationList"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main JS -->
+    <script src="script.js"></script>
+</body>
+</html>
